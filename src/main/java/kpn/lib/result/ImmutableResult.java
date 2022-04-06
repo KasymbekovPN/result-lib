@@ -1,4 +1,4 @@
-package kpn.resultLib.result;
+package kpn.lib.result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,14 @@ public class ImmutableResult<T> implements Result<T> {
 
     public static <T> Builder<T> builder() {
         return new Builder<>();
+    }
+
+    public static <T> Builder<T> ok(T value){
+        return new Builder<T>().success(true).value(value);
+    }
+
+    public static <T> Builder<T> fail(String code){
+        return new Builder<T>().success(false).code(code);
     }
 
     private ImmutableResult(boolean success, T value, String code, Object[] args) {

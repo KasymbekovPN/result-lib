@@ -1,4 +1,4 @@
-package kpn.resultLib.result;
+package kpn.lib.result;
 
 public interface Result<T> {
     boolean isSuccess();

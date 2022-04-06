@@ -1,8 +1,9 @@
-package kpn.resultLib.i18n;
+package kpn.lib.i18n;
 
-import kpn.resultLib.result.ImmutableResult;
-import kpn.resultLib.result.Result;
 import org.junit.jupiter.api.Test;
+
+import kpn.lib.result.ImmutableResult;
+import kpn.lib.result.Result;
 
 import java.util.List;
 import java.util.Locale;

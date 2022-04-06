@@ -1,4 +1,4 @@
-package kpn.resultLib.result;
+package kpn.lib.result;
 
 import org.junit.jupiter.api.Test;
 
