@@ -1,7 +1,7 @@
 package kpn.lib.result;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class ImmutableResult<T> implements Result<T> {
 
@@ -53,7 +53,7 @@ public class ImmutableResult<T> implements Result<T> {
         private boolean success;
         private T value;
         private String code;
-        private final List<Object> args = new ArrayList<>();
+        private final Deque<Object> args = new ArrayDeque<>();
 
         public ImmutableResult<T> build() {
             return new ImmutableResult<>(success, value, code, args.toArray());
@@ -74,8 +74,13 @@ public class ImmutableResult<T> implements Result<T> {
             return this;
         }
 
+        public Builder<T> beginArg(Object arg){
+            this.args.addFirst(arg);
+            return this;
+        }
+
         public Builder<T> arg(Object arg) {
-            args.add(arg);
+            this.args.addLast(arg);
             return this;
         }
     }
