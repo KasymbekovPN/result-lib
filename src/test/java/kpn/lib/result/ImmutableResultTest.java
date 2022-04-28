@@ -91,12 +91,14 @@ public class ImmutableResultTest {
     @Test
     void shouldCheckWhenNotEqual_differentTypes(){
         boolean success = true;
-        Integer value = 123;
+        Integer value0 = 123;
+        String value1 = "some.value";
         String code = "code";
         List<Integer> args = List.of(1, 2, 3);
 
-        ImmutableResult<Integer> r0 = createResult(success, value, code, args);
-        assertThat(r0.equals("")).isFalse();
+        ImmutableResult<Integer> r0 = createResult(success, value0, code, args);
+        ImmutableResult<String> r1 = createResult(success, value1, code, args);
+        assertThat(r0.equals(r1)).isFalse();
     }
 
     @Test
@@ -167,8 +169,8 @@ public class ImmutableResultTest {
         assertThat(expectedArgs.toArray()).isEqualTo(result.getArgs());
     }
 
-    private ImmutableResult<Integer> createResult(boolean success, Integer value, String code, List<Integer> args) {
-        Builder<Integer> builder = ImmutableResult.<Integer>builder()
+    private <T> ImmutableResult<T> createResult(boolean success, T value, String code, List<Integer> args) {
+        Builder<T> builder = ImmutableResult.<T>builder()
             .success(success)
             .value(value)
             .code(code);
