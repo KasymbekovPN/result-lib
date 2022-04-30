@@ -2,8 +2,9 @@ package kpn.lib.i18n;
 
 import org.junit.jupiter.api.Test;
 
-import kpn.lib.result.ImmutableResult;
-import kpn.lib.result.Result;
+import kpn.lib.seed.ImmutableSeed;
+import kpn.lib.seed.ImmutableSeed.Builder;
+import kpn.lib.seed.Seed;
 
 import java.util.List;
 import java.util.Locale;
@@ -18,27 +19,27 @@ public class AbstractI18nServiceTest {
     private static final String TEMPLATE = "message %s !";
 
     @Test
-    void shouldCheckTranslationIfCodeIsAbsent() {
+    public void shouldCheckTranslation_whenCodeIsAbsent() {
         List<Integer> args = List.of(1, 2, 3);
         String expectedTranslation = NON_EXISTED_CODE + " " + args;
 
-        TestI18nService service = new TestI18nService();
-        ImmutableResult.Builder<Void> builder = ImmutableResult.<Void>builder().code(NON_EXISTED_CODE);
+        Builder builder = ImmutableSeed.builder().code(NON_EXISTED_CODE);
         args.forEach(builder::arg);
 
+        TestI18nService service = new TestI18nService();
         String translation = service.getTranslation(builder.build());
         assertThat(expectedTranslation).isEqualTo(translation);
     }
 
     @Test
-    void shouldCheckTranslation() {
+    public void shouldCheckTranslation() {
         List<Integer> args = List.of(1);
         String expectedTranslation = String.format(TEMPLATE, args.get(0));
 
-        TestI18nService service = new TestI18nService();
-        ImmutableResult.Builder<Void> builder = ImmutableResult.<Void>builder().code(EXISTED_CODE);
+        Builder builder = ImmutableSeed.builder().code(EXISTED_CODE);
         args.forEach(builder::arg);
 
+        TestI18nService service = new TestI18nService();
         String translation = service.getTranslation(builder.build());
         assertThat(expectedTranslation).isEqualTo(translation);
     }
@@ -50,12 +51,11 @@ public class AbstractI18nServiceTest {
         }
 
         @Override
-        protected Optional<String> translate(Result<?> result, Locale locale) {
-            String code = result.getCode();
-            if (EXISTED_CODE.equals(code)){
-                return Optional.of(String.format(TEMPLATE, result.getArgs()[0]));
-            }
-            return Optional.empty();
+        protected Optional<String> translate(Seed seed, Locale locale) {
+            String code = seed.getCode();
+            return EXISTED_CODE.equals(code)
+                    ? Optional.of(String.format(TEMPLATE, seed.getArgs()[0]))
+                    : Optional.empty();
         }
     }
 }

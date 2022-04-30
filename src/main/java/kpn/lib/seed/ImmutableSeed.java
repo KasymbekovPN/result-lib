@@ -1,6 +1,7 @@
 package kpn.lib.seed;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 
 public class ImmutableSeed implements Seed {
@@ -26,8 +27,36 @@ public class ImmutableSeed implements Seed {
         return args;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.deepHashCode(args);
+        result = prime * result + ((code == null) ? 0 : code.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ImmutableSeed other = (ImmutableSeed) obj;
+        if (!Arrays.deepEquals(args, other.args))
+            return false;
+        if (code == null) {
+            if (other.code != null)
+                return false;
+        } else if (!code.equals(other.code))
+            return false;
+        return true;
+    }
+
     public static class Builder{
-        private String code;
+        private String code = "";
         private final Deque<Object> args = new ArrayDeque<>();
 
         public Builder code(String code){

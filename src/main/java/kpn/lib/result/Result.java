@@ -1,8 +1,9 @@
 package kpn.lib.result;
 
+import kpn.lib.seed.Seed;
+
 public interface Result<T> {
     boolean isSuccess();
     T getValue();
-    String getCode();
-    Object[] getArgs();
+    Seed getSeed();
 }

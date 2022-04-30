@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import kpn.lib.result.Result;
+import kpn.lib.seed.Seed;
 
 public abstract class AbstractI18nService implements I18nService{
 
@@ -17,20 +17,20 @@ public abstract class AbstractI18nService implements I18nService{
     }
 
     @Override
-    public String getTranslation(Result<?> result, Locale locale) {
-        Optional<String> maybeTranslation = translate(result, locale);
-        return maybeTranslation.orElseGet(() -> createDefaultMessage(result));
+    public String getTranslation(Seed seed, Locale locale) {
+        Optional<String> maybeTranslation = translate(seed, locale);
+        return maybeTranslation.orElseGet(() -> createDefaultMessage(seed));
     }
 
     @Override
-    public String getTranslation(Result<?> result) {
-        return getTranslation(result, defaultLocale);
+    public String getTranslation(Seed seed) {
+        return getTranslation(seed, defaultLocale);
     }
 
-    private String createDefaultMessage(Result<?> result) {
-        List<Object> collect = Arrays.stream(result.getArgs()).collect(Collectors.toList());
-        return result.getCode() + " " + collect;
+    private String createDefaultMessage(Seed seed) {
+        List<Object> collect = Arrays.stream(seed.getArgs()).collect(Collectors.toList());
+        return seed.getCode() + " " + collect;
     }
 
-    protected abstract Optional<String> translate(Result<?> result, Locale locale);
+    protected abstract Optional<String> translate(Seed seed, Locale locale);
 }
