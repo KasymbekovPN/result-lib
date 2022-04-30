@@ -9,42 +9,42 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-public class ImmutableResultTest {
+class ImmutableResultTest {
 
     @Test
-    public void shouldCheckSuccess_whenNotSet() {
+    void shouldCheckSuccess_whenNotSet() {
         ImmutableResult<String> result = ImmutableResult.<String>builder().build();
         assertThat(result.isSuccess()).isFalse();
     }
 
     @Test
-    public void shouldCheckSuccess_whenSet() {
+    void shouldCheckSuccess_whenSet() {
         ImmutableResult<String> result = ImmutableResult.<String>builder().success(true).build();
         assertThat(result.isSuccess()).isTrue();
     }
 
     @Test
-    public void shouldCheckValue_whenNotSet() {
+    void shouldCheckValue_whenNotSet() {
         ImmutableResult<String> result = ImmutableResult.<String>builder().build();
         assertThat(result.getValue()).isNull();
     }
 
     @Test
-    public void shouldCheckValue_whenSet() {
+    void shouldCheckValue_whenSet() {
         String value = "value";
         ImmutableResult<String> result = ImmutableResult.<String>builder().value(value).build();
         assertThat(value).isEqualTo(result.getValue());
     }
 
     @Test
-    public void shouldCheckSeed_whenNotSet(){
+    void shouldCheckSeed_whenNotSet(){
         ImmutableResult<String> result = ImmutableResult.<String>builder().build();
         assertThat(result.getSeed().getCode()).isEmpty();
         assertThat(result.getSeed().getArgs()).isEmpty();
     }
 
     @Test
-    public void shouldCheckSeed_whenSet(){
+    void shouldCheckSeed_whenSet(){
         String code = "some.code";
         List<Integer> rawArgs = List.of(1, 2, 3);
 
@@ -57,5 +57,25 @@ public class ImmutableResultTest {
         ImmutableResult<String> result = resultBuilder.build();
 
         assertThat(expectedSeed).isEqualTo(result.getSeed());
+    }
+
+    @Test
+    void shouldCheckEquality(){
+        String value = "value";
+        String code = "code";
+        String arg = "arg";
+        ImmutableResult<String> result0 = ImmutableResult.<String>ok(value).code(code).arg(arg).build();
+        ImmutableResult<String> result1 = ImmutableResult.<String>ok(value).code(code).arg(arg).build();
+        assertThat(result0).isEqualTo(result1);
+    }
+
+    @Test
+    void shouldCheckHashCalculation(){
+        String value = "value";
+        String code = "code";
+        String arg = "arg";
+        ImmutableResult<String> result0 = ImmutableResult.<String>ok(value).code(code).arg(arg).build();
+        ImmutableResult<String> result1 = ImmutableResult.<String>ok(value).code(code).arg(arg).build();
+        assertThat(result0.hashCode()).isEqualTo(result1.hashCode());
     }
 }

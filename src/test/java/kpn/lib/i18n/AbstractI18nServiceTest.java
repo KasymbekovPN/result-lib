@@ -12,14 +12,14 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AbstractI18nServiceTest {
+class AbstractI18nServiceTest {
 
     private static final String EXISTED_CODE = "existed.code";
     private static final String NON_EXISTED_CODE = "non.existed.code";
     private static final String TEMPLATE = "message %s !";
 
     @Test
-    public void shouldCheckTranslation_whenCodeIsAbsent() {
+    void shouldCheckTranslation_whenCodeIsAbsent() {
         List<Integer> args = List.of(1, 2, 3);
         String expectedTranslation = NON_EXISTED_CODE + " " + args;
 
@@ -32,7 +32,7 @@ public class AbstractI18nServiceTest {
     }
 
     @Test
-    public void shouldCheckTranslation() {
+    void shouldCheckTranslation() {
         List<Integer> args = List.of(1);
         String expectedTranslation = String.format(TEMPLATE, args.get(0));
 

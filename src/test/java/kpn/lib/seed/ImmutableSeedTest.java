@@ -10,16 +10,16 @@ import org.junit.jupiter.api.Test;
 
 import kpn.lib.seed.ImmutableSeed.Builder;
 
-public class ImmutableSeedTest {
+class ImmutableSeedTest {
 
     @Test
-    public void shouldCheckCode_whenNotSet(){
+    void shouldCheckCode_whenNotSet(){
         ImmutableSeed seed = ImmutableSeed.builder().build();
         assertThat(seed.getCode()).isEmpty();
     }
 
     @Test
-    public void shouldCheckCode(){
+    void shouldCheckCode(){
         String code = "some.code";
         ImmutableSeed seed = ImmutableSeed.builder().code(code).build();
         assertThat(seed.getCode()).isEqualTo(code);
@@ -51,5 +51,23 @@ public class ImmutableSeedTest {
         ImmutableSeed seed = builder.build();
 
         assertThat(args.toArray()).isEqualTo(seed.getArgs());
+    }
+
+    @Test
+    void shouldCheckEquality(){
+        String code = "code";
+        String arg = "arg";
+        ImmutableSeed seed0 = ImmutableSeed.builder().code(code).arg(arg).build();
+        ImmutableSeed seed1 = ImmutableSeed.builder().code(code).arg(arg).build();
+        assertThat(seed0).isEqualTo(seed1);
+    }
+
+    @Test
+    void shouldCheckHashCalculation(){
+        String code = "code";
+        String arg = "arg";
+        ImmutableSeed seed0 = ImmutableSeed.builder().code(code).arg(arg).build();
+        ImmutableSeed seed1 = ImmutableSeed.builder().code(code).arg(arg).build();
+        assertThat(seed0.hashCode()).isEqualTo(seed1.hashCode());
     }
 }
