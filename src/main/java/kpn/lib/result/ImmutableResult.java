@@ -13,12 +13,20 @@ public class ImmutableResult<T> implements Result<T> {
         return new Builder<>();
     }
 
-    public static <T> Builder<T> ok(T value){
+    public static <T> Builder<T> bOk(T value){
         return new Builder<T>().success(true).value(value);
     }
 
-    public static <T> Builder<T> fail(String code){
+    public static <T> Builder<T> bFail(String code){
         return new Builder<T>().success(false).code(code);
+    }
+
+    public static <T> ImmutableResult<T> ok(T value){
+        return new Builder<T>().success(true).value(value).build();
+    }
+
+    public static <T> ImmutableResult<T> fail(String code){
+        return new Builder<T>().success(false).code(code).build();
     }
 
     private ImmutableResult(boolean success, T value, Seed seed) {

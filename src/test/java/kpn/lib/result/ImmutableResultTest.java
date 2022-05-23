@@ -64,8 +64,8 @@ class ImmutableResultTest {
         String value = "value";
         String code = "code";
         String arg = "arg";
-        ImmutableResult<String> result0 = ImmutableResult.<String>ok(value).code(code).arg(arg).build();
-        ImmutableResult<String> result1 = ImmutableResult.<String>ok(value).code(code).arg(arg).build();
+        ImmutableResult<String> result0 = ImmutableResult.<String>bOk(value).code(code).arg(arg).build();
+        ImmutableResult<String> result1 = ImmutableResult.<String>bOk(value).code(code).arg(arg).build();
         assertThat(result0).isEqualTo(result1);
     }
 
@@ -74,8 +74,8 @@ class ImmutableResultTest {
         String value = "value";
         String code = "code";
         String arg = "arg";
-        ImmutableResult<String> result0 = ImmutableResult.<String>ok(value).code(code).arg(arg).build();
-        ImmutableResult<String> result1 = ImmutableResult.<String>ok(value).code(code).arg(arg).build();
+        ImmutableResult<String> result0 = ImmutableResult.<String>bOk(value).code(code).arg(arg).build();
+        ImmutableResult<String> result1 = ImmutableResult.<String>bOk(value).code(code).arg(arg).build();
         assertThat(result0.hashCode()).isEqualTo(result1.hashCode());
     }
 }
